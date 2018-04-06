@@ -5,7 +5,7 @@
 				<h1 id="title">avid</h1>
 			</div>
 			<div class="row">
-				<button class="add" data-toggle="modal" data-target="#added">Add new articles</button>
+				<button class="standard add" data-toggle="modal" data-target="#added">Add new articles</button>
 			</div>
 			<div class="row">
 				<button id="returntotop" title="Return to top."><img class="nav" src="assets/img/plane.png" alt="return"></button> <!-- icon by Hanan -->
@@ -35,8 +35,11 @@
 
 				{{#each news}}
 				<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-					<a href={{this.url}}><h3>{{this.title}}</h3></a>
-					<p>{{this.brief}}</p>
+					<div class="article">
+						<a href={{this.url}}><h2 class="heading">{{this.title}}</h2></a>
+						<p>{{this.brief}}</p>
+						<button class="standard save">Save</button><button class="standard delete">Delete</button>
+					</div>
 				</div>
 				{{/each}}
 

@@ -48,6 +48,7 @@ router.get("/", function(req, res) {
     });
 });
 
+// clears all news articles
 router.get("/clear", function(req, res) {
     db.news.drop();
 });

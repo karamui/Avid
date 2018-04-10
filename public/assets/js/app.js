@@ -6,9 +6,19 @@ $("#returntotop").on("click", function() {
 // return to top hover functionality
 $("#returntotop").on({
 	"mouseenter": function() {
-		$(".nav").attr("src", "../assets/img/plane-white.png");
+		$("#rtt").attr("src", "../assets/img/plane-white.png");
 	},
 	"mouseleave": function() {
-		$(".nav").attr("src", "../assets/img/plane.png");
+		$("#rtt").attr("src", "../assets/img/plane.png");
+	}
+});
+
+// return to top hover functionality
+$("#addnyt").on({
+	"mouseenter": function() {
+		$("#nyt").attr("src", "../assets/img/nyt-logo-white.png");
+	},
+	"mouseleave": function() {
+		$("#nyt").attr("src", "../assets/img/nyt-logo.png");
 	}
 });

@@ -53,6 +53,7 @@ div.article {
 
 button.standard {
 	margin-right: 10px;
+	margin-bottom: 5px;
 	padding: 10px 20px;
 	border: none;
 	border-radius: 10px;
@@ -124,11 +125,19 @@ h2.heading {
 	font-weight: bold;
 }
 
+i {
+	font-style: italic;
+}
+
 /* ------------------------------------ IMAGES */
 
 img.img-fluid {
 	width: 100%;
 	height: auto;
+}
+
+img#nyt {
+	margin-bottom: -5px;
 }
 
 /* ------------------------------------ MEDIA QUERIES */

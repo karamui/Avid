@@ -18,7 +18,7 @@ db.on("error", function(error) {
 var router = express.Router();
 
 // default route to display all news
-router.get("/", function(req, res) {
+/*router.get("/news", function(req, res) {
     request("http://www.chicagotribune.com/news/local/breaking/", function(error, response, html) {
 
         if (error) {
@@ -35,6 +35,36 @@ router.get("/", function(req, res) {
             
             db.news.createIndex({title:1}, {unique: true});
             db.news.insert({"title": title, "url": "http://www.chicagotribune.com/" + url, "brief": brief});
+        });
+    });
+
+    db.news.find({}, function(error, data) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log(data);
+            res.render("index", { news: data });
+        }
+    });
+});*/
+
+// default route to display all news
+router.get("/news", function(req, res) {
+    request("https://www.nytimes.com/", function(error, response, html) {
+
+        if (error) {
+            console.log(error);
+        }
+
+        var $ = cheerio.load(html);
+
+        $("article.story.theme-summary").each(function(i, element) {
+            var title = $(element).children("h2.story-heading").text();
+            var url = $(element).children("h2.story-heading a").attr("href");
+            var brief = $(element).children("p.summary").text();
+            
+            db.news.createIndex({title:1}, {unique: true});
+            db.news.insert({"title": title, "url": url, "brief": brief, "source": "The New York Times"});
         });
     });
 

@@ -5,10 +5,10 @@
 				<h1 id="title">avid</h1>
 			</div>
 			<div class="row">
-				<button class="standard add" data-toggle="modal" data-target="#added">Add new articles</button>
+				<button class="standard add" id="addnyt" data-toggle="modal" data-target="#added"><img class="nav" id="nyt" src="assets/img/nyt-logo.png"></button><button class="standard delete" id="clear" data-toggle="modal">Clear all</button> 
 			</div>
 			<div class="row">
-				<button id="returntotop" title="Return to top."><img class="nav" src="assets/img/plane.png" alt="return"></button> <!-- icon by Hanan -->
+				<button id="returntotop" title="Return to top."><img class="nav" id="rtt" src="assets/img/plane.png" alt="return"></button> <!-- icon by Hanan -->
 			</div> 
 		</div> <!-- sidebar column -->
 
@@ -38,7 +38,16 @@
 					<div class="article">
 						<a href={{this.url}}><h2 class="heading">{{this.title}}</h2></a>
 						<p>{{this.brief}}</p>
+						<p><b>SOURCE:</b> <i>{{this.source}}</i></p>
 						<button class="standard save">Save</button><button class="standard delete">Delete</button>
+					</div>
+				</div>
+
+				{{else}}
+				<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+					<div class="article">
+						<h2 class="heading">No articles yet!</h2>
+						<p>Select your source from the sidebar.</p>
 					</div>
 				</div>
 				{{/each}}

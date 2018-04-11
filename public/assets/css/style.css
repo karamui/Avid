@@ -56,6 +56,25 @@ form {
 
 /* ------------------------------------ BUTTONS */
 
+button.btn {
+	border: none;
+	text-transform: uppercase;
+	font-weight: bold;
+	font-size: 13px;
+}
+
+button.modalclose {
+	margin-right: 10px;
+	margin-bottom: 5px;
+	padding: 10px 20px;
+	height: 40px;
+	border: none;
+	border-radius: 10px;
+	z-index: 10;
+	background-color: #e9bbab;
+	color: #ffffff;
+}
+
 button.standard {
 	margin-right: 10px;
 	margin-bottom: 5px;
@@ -66,6 +85,8 @@ button.standard {
 	text-transform: uppercase;
 	font-weight: bold;
 	z-index: 10;
+	background-color: #613942;
+	color: #ffffff;
 }
 
 button.add {
@@ -74,20 +95,13 @@ button.add {
 }
 
 button.save {
-	background-color: #95f442;
+	background-color: #edaa53;
 	color: #ffffff;
 }
 
 button.delete {
-	background-color: #e8293f;
+	background-color: #e45d6e;
 	color: #ffffff;
-}
-
-button.btn {
-	border: none;
-	text-transform: uppercase;
-	font-weight: bold;
-	font-size: 13px;
 }
 
 button.add:hover, button.save:hover, button.delete:hover, button#showall:hover, button.notes:hover, button.btn:hover {
@@ -139,12 +153,30 @@ h2.heading {
 	font-weight: bold;
 }
 
+h3.modal-title {
+	font-family: "Crimson Text", serif;
+	font-size: 30px;
+	font-weight: bold;
+}
+
 i {
 	font-style: italic;
 }
 
 a {
 	z-index: 10;
+	color: #000000;
+}
+
+a:hover {
+	color: #edaa53;
+	text-decoration: none;
+}
+
+label {
+	font-size: 18px;
+	text-transform: uppercase;
+	font-weight: bold;
 }
 
 /* ------------------------------------ IMAGES */

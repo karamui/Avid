@@ -5,7 +5,10 @@
 				<h1 id="title">avid</h1>
 			</div>
 			<div class="row">
-				<button class="standard add" id="addnyt" data-toggle="modal" data-target="#added"><img class="nav" id="nyt" src="assets/img/nyt-logo.png"></button><button class="standard delete" id="clear" data-toggle="modal">Clear all</button> 
+				<button class="standard add" id="addnyt"><img class="nav" id="nyt" src="assets/img/nyt-logo.png"></button>
+				<a href="/"><button class="btn-primary standard" id="showall">All articles</button></a>
+				<a href="/saved"><button class="standard save" id="saved">Saved articles</button></a>
+				<button class="standard delete" id="clear">Clear all</button> 
 			</div>
 			<div class="row">
 				<button id="returntotop" title="Return to top."><img class="nav" id="rtt" src="assets/img/plane.png" alt="return"></button> <!-- icon by Hanan -->
@@ -17,15 +20,73 @@
 		  	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 		    	<div class="modal-content">
 		      		<div class="modal-header">
-		        		<!--<h3 class="modal-title"></h3>-->
-		        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		        		<h3 class="modal-title">Happy reading!</h3>
+		        		<button type="button" class="close reload" data-dismiss="modal" aria-label="Close">
 		          			<span aria-hidden="true">&times;</span>
 		       		 	</button>
 		      		</div>
 
 			      	<div class="modal-body">
-			        	<p>New content added!</p>
+			        	<p id="count"></p>
 			      	</div>
+
+			      	<div class="modal-footer">
+				        <a href="/"><button type="button" class="btn btn-primary reload">Keep reading...</button></a>
+				    </div>
+		    	</div> <!-- modal content -->
+		  	</div> <!-- modal-dialog -->
+		</div> <!-- resume modal -->
+
+		<!-- REFERENCE: https://getbootstrap.com/docs/4.0/components/modal/ -->
+		<div class="modal fade" id="notes" tabindex="-1" role="dialog" aria-labelledby="notes" aria-hidden="true"> <!-- resume modal -->
+		  	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		    	<div class="modal-content">
+		      		<div class="modal-header">
+		        		<h3 class="modal-title">Notes for this article...</h3>
+		        		<button type="button" class="close reload" data-dismiss="modal" aria-label="Close">
+		          			<span aria-hidden="true">&times;</span>
+		       		 	</button>
+		      		</div>
+
+			      	<div class="modal-body">
+			      		<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+				      		<form>
+								<div class="form-group row">
+									<label for="author" class="col-form-label col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">Author</label>
+									<div class="col-12 col-sm-12 col-md-10 col-lg-10 col-xl-10">
+										<input class="form-control" type="text" id="author">
+									</div>
+								</div>
+								<div class="form-group row">
+								    <label for="author" class="col-form-label col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2">Comment</label>
+								    <div class="col-12 col-sm-12 col-md-10 col-lg-10 col-xl-10">
+								    	<textarea class="form-control" id="body" rows="3"></textarea>
+									</div>
+								</div>
+							</form>
+
+			        	
+							{{#each notes}}
+							<div class="article">
+								<h2 class="heading">Written by {{this.author}}</h2>
+								<p>{{this.body}}</p>
+								<button class="standard delete deletenote reload" data-id={{this.notes._id}}>Delete</button>
+							</div>
+							
+
+						{{else}}
+							<div class="article">
+								<h2 class="heading">No notes yet!</h2>
+								<p>Be the first to submit a note!</p>
+							</div>
+						{{/each}}
+						</div>
+			      	</div>
+
+			      	<div class="modal-footer">
+				        <button type="button" class="btn reload">Close</button>
+				        <button type="button" class="btn btn-primary reload" id="submit">Add a note!</button>
+				    </div>
 		    	</div> <!-- modal content -->
 		  	</div> <!-- modal-dialog -->
 		</div> <!-- resume modal -->
@@ -39,7 +100,9 @@
 						<a href={{this.url}}><h2 class="heading">{{this.title}}</h2></a>
 						<p>{{this.brief}}</p>
 						<p><b>SOURCE:</b> <i>{{this.source}}</i></p>
-						<button class="standard save">Save</button><button class="standard delete">Delete</button>
+						<button class="standard save savearticle reload" data-id={{this._id}}>Save</button>
+						<button class="standard delete deletearticle reload" data-id={{this._id}}>Delete</button>
+						<button class="standard btn-primary notes" data-id={{this._id}}>Notes</button>
 					</div>
 				</div>
 

@@ -15,13 +15,58 @@ $(document).on("ready", function() {
 		}
 	});
 
-	// logo hover functionality
+	// reload the page
+	$(document).on("click", ".reload", function() {
+		location.reload();
+	});
+
+	// logo hover functionality for The New York Times 
 	$("#addnyt").on({
 		"mouseenter": function() {
 			$("#nyt").attr("src", "../assets/img/nyt-logo-white.png");
 		},
 		"mouseleave": function() {
 			$("#nyt").attr("src", "../assets/img/nyt-logo.png");
+		}
+	});
+
+	// logo hover functionality for Chicago Tribune 
+	$("#addct").on({
+		"mouseenter": function() {
+			$("#ct").attr("src", "../assets/img/ct-logo-white.png");
+		},
+		"mouseleave": function() {
+			$("#ct").attr("src", "../assets/img/ct-logo.png");
+		}
+	});
+
+	// logo hover functionality for The Wall Street Journal
+	$("#addwsj").on({
+		"mouseenter": function() {
+			$("#wsj").attr("src", "../assets/img/wsj-logo-white.png");
+		},
+		"mouseleave": function() {
+			$("#wsj").attr("src", "../assets/img/wsj-logo.png");
+		}
+	});
+
+	// logo hover functionality for The Washington Post
+	$("#addwp").on({
+		"mouseenter": function() {
+			$("#wp").attr("src", "../assets/img/wp-logo-white.png");
+		},
+		"mouseleave": function() {
+			$("#wp").attr("src", "../assets/img/wp-logo.png");
+		}
+	});
+
+	// logo hover functionality for Boston Globe
+	$("#addbg").on({
+		"mouseenter": function() {
+			$("#bg").attr("src", "../assets/img/bg-logo-white.png");
+		},
+		"mouseleave": function() {
+			$("#bg").attr("src", "../assets/img/bg-logo.png");
 		}
 	});
 
@@ -35,15 +80,59 @@ $(document).on("ready", function() {
 		location.reload();
 	});
 
-	// add articles from The New York Times
+	// add articles from The New York Times and display updated message
 	$("#addnyt").on("click", function() {
 		$.ajax({
 		    method: "GET",
 		    url: "/nyt"
-		}).done(function() {
-			$("#count").text("You are now completely up-to-date with The New York Times.");
-	    	$("#added").modal("show");
 		});
+
+		$("#count").html("You are now completely up-to-date with <i>The New York Times</i>.");
+    	$("#added").modal("show");
+	});
+
+	// add articles from Chicago Tribune and display updated message
+	$("#addct").on("click", function() {
+		$.ajax({
+		    method: "GET",
+		    url: "/ct"
+		});
+
+		$("#count").html("You are now completely up-to-date with <i>Chicago Tribune</i>.");
+    	$("#added").modal("show");
+	});
+
+	// add articles from The Wall Street Journal and display updated message
+	$("#addwsj").on("click", function() {
+		$.ajax({
+		    method: "GET",
+		    url: "/wsj"
+		});
+
+		$("#count").html("You are now completely up-to-date with <i>The Wall Street Journal</i>.");
+    	$("#added").modal("show");
+	});
+
+	// add articles from The Washington Post and display updated message
+	$("#addwp").on("click", function() {
+		$.ajax({
+		    method: "GET",
+		    url: "/wp"
+		});
+
+		$("#count").html("You are now completely up-to-date with <i>The Washington Post</i>.");
+    	$("#added").modal("show");
+	});
+
+	// add articles from Boston Globe and display updated message
+	$("#addbg").on("click", function() {
+		$.ajax({
+		    method: "GET",
+		    url: "/bg"
+		});
+
+		$("#count").html("You are now completely up-to-date with <i>Boston Globe</i>.");
+    	$("#added").modal("show");
 	});
 
 	// save an article
@@ -66,21 +155,16 @@ $(document).on("ready", function() {
 		});
 	});
 
-	// reload the page
-	$(document).on("click", "button.reload", function() {
-		location.reload();
-	});
-
-	// show notes
+	// show all notes for an article
 	$(".notes").on("click", function() {
 		var id = $(this).attr("data-id");
-		
 
 		$.ajax({
 		    method: "GET",
 		    url: "/notes/" + id
 		}).done(function(result) {
 
+			// if notes exist...
 			if (result.notes.length > 0) {
 				$("#notecollection").empty();
 
@@ -103,13 +187,13 @@ $(document).on("ready", function() {
 				}
 			}
 
-			// display modal and apply article id to submit button
+			// displays modal and apply article id to note submission button
 	    	$("#notes").modal("show");
 	    	$("#submit").attr("data-id", id);
 		});
 	});
 
-	// submit a note
+	// submit a new note
 	$("#submit").on("click", function() {
 		var id = $(this).attr("data-id");
 		console.log(id);

@@ -20,37 +20,6 @@ mongoose.connect(MONGODB_URI);
 var router = express.Router();
 
 // default route to display all news
-/*router.get("/news", function(req, res) {
-    request("http://www.chicagotribune.com/news/local/breaking/", function(error, response, html) {
-
-        if (error) {
-            console.log(error);
-        }
-
-        var $ = cheerio.load(html);
-
-        $("section.trb_outfit_group_list_item_body").each(function(i, element) {
-            var title = $(element).children("h3.trb_outfit_relatedListTitle").text();
-            var url = $(element).children("a.trb_outfit_relatedListTitle_a").attr("href");
-            console.log(url);
-            var brief = $(element).children("p.trb_outfit_group_list_item_brief").text();
-            
-            db.news.createIndex({title:1}, {unique: true});
-            db.news.insert({"title": title, "url": "http://www.chicagotribune.com/" + url, "brief": brief});
-        });
-    });
-
-    db.news.find({}, function(error, data) {
-        if (error) {
-            console.log(error);
-        } else {
-            console.log(data);
-            res.render("index", { news: data });
-        }
-    });
-});*/
-
-// default route to display all news
 router.get("/", function(req, res) {
     db.Article.find({ status: "unsaved" })
     .populate("notes")
@@ -135,6 +104,232 @@ router.get("/nyt", function(req, res) {
     });
 });
 
+
+// pulls news from The Chicago Tribune
+router.get("/ct", function(req, res) {
+    var count = 0;
+    var result = [];
+
+    db.Article.find({})
+    .then(function(data) {
+        result = data;
+    });
+
+    request("http://www.chicagotribune.com/news/local/breaking/", function(error, response, html) {
+
+        if (error) {
+            console.log(error);
+        }
+
+        var $ = cheerio.load(html);
+
+        $("section.trb_outfit_group_list_item_body").each(function(i, element) {
+            var flag = false;
+            var title = $(element).children("h3.trb_outfit_relatedListTitle").text();
+            var url = $(element).children("h3.trb_outfit_relatedListTitle").children("a").attr("href");
+            var brief = $(element).children("p.trb_outfit_group_list_item_brief").text();
+            
+            for (var i = 0; i < result.length; i++) {
+                if (result[i].title == title) {
+                    flag = true;
+                }
+            }
+
+            if (title != "" && title != null && flag == false) {
+                count++;
+
+                var data = {
+                    status: "unsaved",
+                    title: title,
+                    url: "http://www.chicagotribune.com" + url,
+                    brief: brief,
+                    source: "Chicago Tribune"
+                };
+
+                db.Article.create(data)
+                .then(function(database) {
+                    console.log(database);
+                })
+                .catch(function(err) {
+                    return res.json(err);
+                });
+            }
+        });
+        console.log(count + " articles have been added.");
+    });
+});
+
+// pulls news from The Wall Street Journal
+router.get("/wsj", function(req, res) {
+    var count = 0;
+    var result = [];
+
+    db.Article.find({})
+    .then(function(data) {
+        result = data;
+    });
+
+    request("https://www.wsj.com/", function(error, response, html) {
+
+        if (error) {
+            console.log(error);
+        }
+
+        var $ = cheerio.load(html);
+
+        $("div.wsj-card").each(function(i, element) {
+            var flag = false;
+            var title = $(element).children("h3.wsj-headline").text();
+            var url = $(element).children("h3.wsj-headline").children("a.wsj-headline-link").attr("href");
+            var brief = $(element).children("div.wsj-card-body").children("p.wsj-summary").text();
+            
+            for (var i = 0; i < result.length; i++) {
+                if (result[i].title == title) {
+                    flag = true;
+                }
+            }
+
+            if (title != "" && title != null && flag == false) {
+                count++;
+
+                var data = {
+                    status: "unsaved",
+                    title: title,
+                    url: url,
+                    brief: brief,
+                    source: "The Wall Street Journal"
+                };
+
+                db.Article.create(data)
+                .then(function(database) {
+                    console.log(database);
+                })
+                .catch(function(err) {
+                    return res.json(err);
+                });
+            }
+        });
+        console.log(count + " articles have been added.");
+    });
+});
+
+// pulls news from The Washington Post
+router.get("/wp", function(req, res) {
+    var count = 0;
+    var result = [];
+
+    db.Article.find({})
+    .then(function(data) {
+        result = data;
+    });
+
+    request("https://www.washingtonpost.com/", function(error, response, html) {
+
+        if (error) {
+            console.log(error);
+        }
+
+        var $ = cheerio.load(html);
+
+        $("div.flex-item").each(function(i, element) {
+            var flag = false;
+            var title = $(element).children("div.headline").children("a").text();
+            var url = $(element).children("div.headline").children("a").attr("href");
+            var brief = $(element).children("div.blurb").text();
+            
+            for (var i = 0; i < result.length; i++) {
+                if (result[i].title == title) {
+                    flag = true;
+                }
+            }
+
+            if (title != "" && title != null && flag == false) {
+                count++;
+
+                var data = {
+                    status: "unsaved",
+                    title: title,
+                    url: url,
+                    brief: brief,
+                    source: "The Washington Post"
+                };
+
+                db.Article.create(data)
+                .then(function(database) {
+                    console.log(database);
+                })
+                .catch(function(err) {
+                    return res.json(err);
+                });
+            }
+        });
+        console.log(count + " articles have been added.");
+    });
+});
+
+// pulls news from Boston Globe
+router.get("/bg", function(req, res) {
+    var count = 0;
+    var result = [];
+
+    db.Article.find({})
+    .then(function(data) {
+        result = data;
+    });
+
+    request("https://www.bostonglobe.com/", function(error, response, html) {
+
+        if (error) {
+            console.log(error);
+        }
+
+        var $ = cheerio.load(html);
+
+        $("div.story").each(function(i, element) {
+            var flag = false;
+            var title = $(element).children("h2.story-title").text();
+            var url = $(element).children("h2.story-title").children("a.story-perm").attr("href");
+            var brief = $(element).children("div.excerpt").children("p").text();
+            
+            // checking to ensure url will be correctly formatted and excluding noncompliant urls
+            if (url != undefined) {
+                var urlsplit = url.substring(0,4);
+
+                if (urlsplit == "http") {
+                    flag = true;
+                }
+            }
+        
+            for (var i = 0; i < result.length; i++) {
+                if (result[i].title == title) {
+                    flag = true;
+                }
+            }
+
+            if (title != "" && title != null && flag == false && url != undefined) {
+                count++;
+
+                var data = {
+                    status: "unsaved",
+                    title: title,
+                    url: "https://www.bostonglobe.com" + url,
+                    brief: brief,
+                    source: "Boston Globe"
+                };
+
+                db.Article.create(data)
+                .then(function(database) {
+                    console.log(database);
+                })
+                .catch(function(err) {
+                    return res.json(err);
+                });
+            }
+        });
+        console.log(count + " articles have been added.");
+    });
+});
+
 // clears all unsaved news articles
 router.get("/clear", function(req, res) {
     db.Article.remove({ status: "unsaved" }, function(error) {
@@ -156,12 +351,12 @@ router.post("/delete/:id", function(req, res) {
     });
 });
 
-// pulls notes for an article
+// pulls all notes for an article
 router.get("/notes/:id", function(req, res) {
     db.Article.findOne({ _id: req.params.id })
     .populate("notes")
     .then(function(data) {
-        // console.log(data);
+        console.log(data);
         res.json(data);
     })
     .catch(function(err) {
@@ -173,12 +368,12 @@ router.get("/notes/:id", function(req, res) {
 router.post("/notes/:id", function(req, res) {
     db.Note.create(req.body)
     .then(function(dbNote) {
-        // console.log(dbNote);
+        console.log(dbNote);
         console.log("Note added!");
         return db.Article.findOneAndUpdate({_id: req.params.id}, {$push: {notes: dbNote._id}}, {new: true})
     })
     .then(function(dbArticle) {
-        // console.log(dbArticle);
+        console.log(dbArticle);
         res.json(dbArticle);
     })
     .catch(function(err) {

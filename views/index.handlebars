@@ -65,21 +65,12 @@
 								</div>
 							</form>
 
-			        	
-							{{#each notes}}
-							<div class="article">
-								<h2 class="heading">Written by {{this.author}}</h2>
-								<p>{{this.body}}</p>
-								<button class="standard delete deletenote reload" data-id={{this.notes._id}}>Delete</button>
+							<div id="notecollection">
+								<div class="article">
+									<h2 class="heading">No notes yet!</h2>
+									<p>Be the first to submit a note!</p>
+								</div>
 							</div>
-							
-
-						{{else}}
-							<div class="article">
-								<h2 class="heading">No notes yet!</h2>
-								<p>Be the first to submit a note!</p>
-							</div>
-						{{/each}}
 						</div>
 			      	</div>
 

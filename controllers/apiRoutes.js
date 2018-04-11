@@ -131,7 +131,7 @@ router.get("/nyt", function(req, res) {
                 });
             }
         });
-        console.log(count - 1 + " articles have been added.");
+        console.log(count + " articles have been added.");
     });
 });
 
@@ -161,7 +161,7 @@ router.get("/notes/:id", function(req, res) {
     db.Article.findOne({ _id: req.params.id })
     .populate("notes")
     .then(function(data) {
-        console.log(data);
+        // console.log(data);
         res.json(data);
     })
     .catch(function(err) {
@@ -173,12 +173,12 @@ router.get("/notes/:id", function(req, res) {
 router.post("/notes/:id", function(req, res) {
     db.Note.create(req.body)
     .then(function(dbNote) {
-        console.log(dbNote);
+        // console.log(dbNote);
         console.log("Note added!");
         return db.Article.findOneAndUpdate({_id: req.params.id}, {$push: {notes: dbNote._id}}, {new: true})
     })
     .then(function(dbArticle) {
-        console.log(dbArticle);
+        // console.log(dbArticle);
         res.json(dbArticle);
     })
     .catch(function(err) {

@@ -24,7 +24,7 @@ var ArticleSchema = new Schema({
     },
     brief: {
         type: String,
-        required: true,
+        required: false,
         trim: true
     },
     source: {

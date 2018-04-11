@@ -84,6 +84,9 @@ button.delete {
 
 button.btn {
 	border: none;
+	text-transform: uppercase;
+	font-weight: bold;
+	font-size: 13px;
 }
 
 button.add:hover, button.save:hover, button.delete:hover, button#showall:hover, button.notes:hover, button.btn:hover {
